@@ -11,6 +11,7 @@ import spring.hrms.repository.HolidayRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +32,9 @@ public class HolidayService {
     }
 
     public void deleteHoliday(LocalDate holidayDate) {
-
-
-
-
+        Optional<Holiday> byHolidayDate = holidayRepository.findByHolidayDate(holidayDate.toString());
+        if (byHolidayDate.isPresent()) {
+            holidayRepository.delete(byHolidayDate.get());
+        }else throw new RuntimeException("Holiday not found");
     }
 }

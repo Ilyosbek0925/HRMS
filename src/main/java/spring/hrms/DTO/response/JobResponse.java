@@ -1,16 +1,15 @@
-package spring.hrms.DTO.request;
+package spring.hrms.DTO.response;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class JobRequest {
+@Builder
+@Data
+public class JobResponse {
+    private Integer id;
     private String department;
     private String title;
     private String location;
     private String workType;
     private String amount;
-
 }

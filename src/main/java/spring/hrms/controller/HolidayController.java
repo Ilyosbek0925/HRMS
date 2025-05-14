@@ -30,9 +30,10 @@ public class HolidayController {
         return ResponseEntity.status(200).body(allHoliday);
     }
 
-    @DeleteMapping
-    public ResponseEntity<HolidayResponse> deleteHoliday(LocalDate holidayDate) {
+    @DeleteMapping("deleteByHolidayDate")
+    public ResponseEntity<HolidayResponse> deleteHolidayByDate(LocalDate holidayDate) {
         holidayService.deleteHoliday(holidayDate);
+        return ResponseEntity.status(204).build();
     }
 
 

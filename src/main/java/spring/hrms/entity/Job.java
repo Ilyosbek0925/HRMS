@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Jobs extends BaseEntity{
+public class Job extends BaseEntity{
     private String department;
     private String jobTitle;
     private String location;
