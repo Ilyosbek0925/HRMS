@@ -1,4 +1,4 @@
-package spring.hrms.conf;
+package spring.hrms.aws;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
