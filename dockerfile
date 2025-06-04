@@ -1,11 +1,14 @@
-# Java 17 bazaviy imij
-FROM openjdk:21-jdk-slim
+# 1-bosqich: Build qilish
+FROM maven:3.9.4-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Loyiha fayllarini konteynerga nusxalash
-COPY target/HRMS-0.0.1-SNAPSHOT.jar app.jar
-
-# Port ochish (masalan: 8080)
+# 2-bosqich: runtime uchun yengil imidj
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/HRMS-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Loyihani ishga tushirish
 ENTRYPOINT ["java", "-jar", "app.jar"]
