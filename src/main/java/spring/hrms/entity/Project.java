@@ -1,9 +1,6 @@
 package spring.hrms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,26 +15,14 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Projects extends BaseEntity {
+public class Project extends BaseEntity {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private ProjectStatus status;
-    @ManyToMany
-    @JoinTable(name = "project_employee",
-    joinColumns = @JoinColumn(name = "project_id")
-    ,inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    private List<EmployeePersonal> employeePersonal;
-
-
-
-
-
-
-
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "employee_Id")
+    private EmployeePersonal employeePersonal;
 
 
 }

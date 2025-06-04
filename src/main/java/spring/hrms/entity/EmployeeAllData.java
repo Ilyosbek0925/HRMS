@@ -1,25 +1,26 @@
 package spring.hrms.entity;
 
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
-import spring.hrms.DTO.request.AccountAccessRequest;
-import spring.hrms.DTO.request.EmployeePersonalRequest;
-import spring.hrms.DTO.request.EmployeeProfessionalRequest;
 import spring.hrms.entity.employee.AccountAccess;
-import spring.hrms.entity.employee.EmployeeDocuments;
 import spring.hrms.entity.employee.EmployeePersonal;
 import spring.hrms.entity.employee.EmployeeProfessional;
+//import spring.hrms.entity.employee.archiveDocument.AppointmentLetter;
+//import spring.hrms.entity.employee.archiveDocument.ExperienceLetter;
+//import spring.hrms.entity.employee.archiveDocument.RelivingLetter;
+//import spring.hrms.entity.employee.archiveDocument.SalarySlip;
+import spring.hrms.entity.employee.document.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Set;
 @Builder
 @Data
 public class EmployeeAllData {
     Integer storageId;
     EmployeePersonal employeePersonal;
     EmployeeProfessional employeeProfessional;
-    EmployeeDocuments employeeDocuments;
+//   AppointmentLetter appointmentLetter;
+//   ExperienceLetter experienceLetter;
+//   RelivingLetter relivingLetter;
+//   SalarySlip salarySlip;
+   EmployeePhoto photo;
     AccountAccess accountAccess;
 }

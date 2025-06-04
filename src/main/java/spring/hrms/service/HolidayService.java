@@ -32,7 +32,7 @@ public class HolidayService {
     }
 
     public void deleteHoliday(LocalDate holidayDate) {
-        Optional<Holiday> byHolidayDate = holidayRepository.findByHolidayDate(holidayDate.toString());
+        Optional<Holiday> byHolidayDate = holidayRepository.findByHolidayDate(holidayDate);
         if (byHolidayDate.isPresent()) {
             holidayRepository.delete(byHolidayDate.get());
         }else throw new RuntimeException("Holiday not found");

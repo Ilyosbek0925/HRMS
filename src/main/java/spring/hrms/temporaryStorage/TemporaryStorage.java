@@ -7,13 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TemporaryStorage {
-public static List<EmployeeAllData>allEmployees=new ArrayList<EmployeeAllData>();
-
-
-
-
-
-
-
+public static List<EmployeeAllData>allEmployees=new ArrayList<>();
 
 }

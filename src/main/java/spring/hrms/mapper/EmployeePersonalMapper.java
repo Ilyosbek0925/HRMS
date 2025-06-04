@@ -19,7 +19,7 @@ public EmployeePersonal toEmployeePersonal(EmployeePersonalRequest employeePerso
     employeePersonal.setMobileNumber(employeePersonal.getMobileNumber());
     return employeePersonal;
 }
-public EmployeePersonalResponse toEmployeePersonalResponse(EmployeePersonal employeePersonal, int storageId) {
+public EmployeePersonalResponse toEmployeePersonalResponse(EmployeePersonal employeePersonal) {
     return EmployeePersonalResponse.builder()
             .address(employeePersonal.getAddress())
             .city(employeePersonal.getCity())
@@ -32,7 +32,6 @@ public EmployeePersonalResponse toEmployeePersonalResponse(EmployeePersonal empl
             .state(employeePersonal.getState())
             .nationality(employeePersonal.getNationality())
             .zipCode(employeePersonal.getZipCode())
-            .storageId(storageId)
             .build();
 }
 

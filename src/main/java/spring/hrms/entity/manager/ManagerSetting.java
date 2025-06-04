@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import spring.hrms.entity.BaseEntity;
-import spring.hrms.entity.Manager;
 
 @Getter
 @Setter

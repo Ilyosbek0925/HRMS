@@ -1,0 +1,24 @@
+/*
+package spring.hrms.entity.employee.archiveDocument;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
+import spring.hrms.entity.BaseEntity;
+import spring.hrms.entity.employee.EmployeePersonal;
+
+@Entity
+@Getter
+@Setter
+public class ExperienceLetter extends BaseEntity {
+    private String originalName;
+    private String serverName;
+    private String fileType;
+    @OneToOne
+    @JsonBackReference
+    EmployeePersonal employeePersonal;
+
+}
+*/

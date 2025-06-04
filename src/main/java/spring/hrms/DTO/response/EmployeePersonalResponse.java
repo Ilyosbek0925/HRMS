@@ -1,17 +1,20 @@
 package spring.hrms.DTO.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-@Component
+
 
 @Data
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmployeePersonalResponse {
 private Integer storageId;
+private Integer employeeId;
     private String firstName;
     private String lastName;
     private String mobileNumber;
