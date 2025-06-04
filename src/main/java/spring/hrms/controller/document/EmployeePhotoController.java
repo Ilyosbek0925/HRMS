@@ -7,8 +7,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import spring.hrms.DTO.ApiResponseDto;
 import spring.hrms.DTO.response.DocumentResponse;
+import spring.hrms.entity.status.ResponseStatus;
 import spring.hrms.service.employeeService.document.EmployeePhotoService;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,13 +20,13 @@ import spring.hrms.service.employeeService.document.EmployeePhotoService;
 public class EmployeePhotoController {
     private final EmployeePhotoService service;
     @PostMapping("/{employeeId}")
-    public ResponseEntity uploadRelivingLetter(@RequestParam MultipartFile file, @PathVariable Integer employeeId) {
+    public ResponseEntity<ApiResponseDto> uploadRelivingLetter(@RequestParam MultipartFile file, @PathVariable Integer employeeId) {
         service.uploadEmployeePhoto(file, employeeId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ApiResponseDto(ResponseStatus.SUCCESS,"photo added successfully", LocalDateTime.now()));
     }
 
     @GetMapping("/{serverName}")
-    public ResponseEntity getRelivingLetter(@PathVariable String serverName) {
+    public ResponseEntity<byte[]> getRelivingLetter(@PathVariable String serverName) {
         DocumentResponse response = service.downloadEmployeePhoto(serverName);
         return ResponseEntity.status(200)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getOriginalName() + "\"")
