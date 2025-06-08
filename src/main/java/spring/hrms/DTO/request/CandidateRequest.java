@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * DTO for {@link spring.hrms.entity.employee.Candidate}
  */
 @Value
-public class CandidateDto implements Serializable {
+public class CandidateRequest implements Serializable {
     String name;
     String appliedFor;
     LocalDate appliedDate;

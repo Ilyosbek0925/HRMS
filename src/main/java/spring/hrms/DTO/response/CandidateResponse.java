@@ -1,5 +1,6 @@
 package spring.hrms.DTO.response;
 
+import lombok.Builder;
 import lombok.Value;
 import spring.hrms.entity.employee.CandidateStatus;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
  * DTO for {@link spring.hrms.entity.employee.Candidate}
  */
 @Value
+@Builder
 public class CandidateResponse implements Serializable {
     Integer id;
     String name;

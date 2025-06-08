@@ -1,29 +1,31 @@
+version: '3.8'
 
 services:
-  app:
-    build: . # Dockerfile shu papkada bo‘lishi kerak
-    container_name: myproject1
-    ports:
-      - "8080:8080" # Tashqi port -> Konteyner port
-    depends_on:
-      - postgres # Dasturdan oldin postgres ishga tushadi
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hrms
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Ilyosbek0925
-
-  postgres:
+  db:
     image: postgres:15
-    container_name: postgres_container
+    container_name: hrms_postgres
     restart: always
     environment:
       POSTGRES_DB: hrms
-      POSTGRES_USER: postgres
+      POSTGRES_USER: batman
       POSTGRES_PASSWORD: Ilyosbek0925
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data # Ma'lumotlar saqlanadigan joy
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: hrms_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/hrms
+      SPRING_DATASOURCE_USERNAME: batman
+      SPRING_DATASOURCE_PASSWORD: Ilyosbek0925
+    ports:
+      - "8080:8080"
 
 volumes:
-  pgdata:
+  postgres_data:
