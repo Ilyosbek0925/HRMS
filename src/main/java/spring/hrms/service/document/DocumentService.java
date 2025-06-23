@@ -1,4 +1,4 @@
-package spring.hrms.service.employeeService.document;
+package spring.hrms.service.document;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import spring.hrms.DTO.response.DocumentResponse;
 import spring.hrms.aws.DownloadUploadService;
+import spring.hrms.entity.EmployeeAllData;
 import spring.hrms.entity.employee.EmployeePersonal;
 import spring.hrms.entity.employee.document.*;
 import spring.hrms.mapper.DocumentMapper;
 import spring.hrms.repository.employeeRepo.EmployeePersonalRepo;
 import spring.hrms.repository.employeeRepo.document.*;
+import spring.hrms.temporaryStorage.TemporaryStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,51 +27,34 @@ public class DocumentService {
     private final DocumentMapper mapper;
     @Value("${project.domainName}")
     private String domainName;
-
+    private final List<EmployeeAllData> temporaryStorage = TemporaryStorage.allEmployees;
     public List<DocumentResponse> getDocuments(int employeeId) {
         EmployeePersonal employee = employeeRepo.findById(employeeId).orElseThrow(() -> new RuntimeException("Employee not found"));
-//        SalarySlip salarySlip = employee.getSalarySlip();
-//        AppointmentLetter appointmentLetter = employee.getAppointmentLetter();
-//        ExperienceLetter experienceLetter = employee.getExperienceLetter();
-//        RelivingLetter relivingLetter = employee.getRelivingLetter();
         List<Document> documents = employee.getDocuments();
+        System.out.println(documents.size());
         List<DocumentResponse> responses = new ArrayList<>();
-//        responses.add(DocumentResponse.builder()
-//                        .originalName(salarySlip.getOriginalName())
-//                        .documentId(salarySlip.getId())
-//                .build());
-//        responses.add(DocumentResponse.builder()
-//                        .originalName(appointmentLetter.getOriginalName())
-//                        .documentId(appointmentLetter.getId())
-//                .build());
-//        responses.add(DocumentResponse.builder()
-//                        .originalName(experienceLetter.getOriginalName())
-//                        .documentId(experienceLetter.getId())
-//                .build());
-//        responses.add(DocumentResponse.builder()
-//                        .originalName(relivingLetter.getOriginalName())
-//                        .documentId(relivingLetter.getId())
-//                .build());
         for (Document document : documents) {
             responses.add(DocumentResponse.builder()
                     .originalName(document.getOriginalName())
                     .documentId(document.getId())
+                    .downloadUrl(document.getDownloadUrl())
                     .build());
         }
         return responses;
     }
 
 
-    public DocumentResponse uploadFile(MultipartFile file, int employeeId) {
+    public DocumentResponse uploadFile(MultipartFile file, int storageId) {
+        EmployeePersonal employee = temporaryStorage.get(storageId).getEmployeePersonal();
         DocumentResponse response = downloadService.uploadFile(file);
-        EmployeePersonal employee = employeeRepo.findById(employeeId).orElseThrow(() -> new RuntimeException("Employee not found"));
         Document document = new Document();
         document.setServerName(response.getServerName());
         document.setFileType(response.getFileType());
         document.setOriginalName(file.getOriginalFilename());
         document.setEmployeePersonal(employee);
-        Document save = documentRepo.save(document);
-        return mapper.toDocumentResponse(save);
+        document.setDownloadUrl(domainName + "/employee-document/" + response.getServerName());
+        temporaryStorage.get(storageId).getDocuments().add(document);
+        return mapper.toDocumentResponse(document);
     }
 
 
@@ -80,7 +65,7 @@ public class DocumentService {
         document.setServerName(response.getServerName());
         document.setId(documentId);
         document.setFileType(response.getFileType());
-        document.setDownloadUrl(domainName+"employee-documents/"+response.getServerName());
+        document.setDownloadUrl(domainName + "/employee-document/" + response.getServerName());
         return mapper.toDocumentResponse(documentRepo.save(document));
     }
 
@@ -89,5 +74,15 @@ public class DocumentService {
         if (documentRepo.existsById(documentId)) {
             documentRepo.deleteById(documentId);
         } else throw new EntityNotFoundException("Document not found");
+    }
+
+    public DocumentResponse downloadDocument(String serverName) {
+            Document document = documentRepo.findByServerName(serverName).orElseThrow(() -> new EntityNotFoundException("entity not found" + serverName));
+            byte[] file = downloadService.downloadFile(serverName);
+            return DocumentResponse.builder()
+                    .file(file)
+                    .fileType(document.getFileType())
+                    .originalName(document.getOriginalName())
+                    .build();
     }
 }

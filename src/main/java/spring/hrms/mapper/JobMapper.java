@@ -3,6 +3,7 @@ package spring.hrms.mapper;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Component;
 import spring.hrms.DTO.request.JobRequest;
+import spring.hrms.DTO.request.JobUpdateRequest;
 import spring.hrms.DTO.response.JobResponse;
 import spring.hrms.entity.Job;
 
@@ -30,6 +31,7 @@ public class JobMapper {
                 .amount(job.getAmount())
                 .location(job.getLocation())
                 .workType(job.getWorkType())
+                .status(job.getStatus())
                 .build();
     }
 
@@ -40,4 +42,14 @@ public class JobMapper {
     }
 
 
+    public Job toJob(JobUpdateRequest jobRequest) {
+        Job job = new Job();
+        job.setJobTitle(jobRequest.getTitle());
+        job.setDepartment(jobRequest.getDepartment());
+        job.setAmount(jobRequest.getAmount());
+        job.setLocation(jobRequest.getLocation());
+        job.setWorkType(jobRequest.getWorkType());
+job.setStatus(jobRequest.getJobStatus());
+        return job;
+    }
 }

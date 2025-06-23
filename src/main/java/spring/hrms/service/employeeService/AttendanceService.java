@@ -1,6 +1,5 @@
-package spring.hrms.service;
+package spring.hrms.service.employeeService;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +14,7 @@ import spring.hrms.DTO.response.AttendanceResponse;
 import spring.hrms.entity.employee.EmployeePersonal;
 import spring.hrms.entity.employee.EmployeeProfessional;
 import spring.hrms.entity.employee.document.EmployeePhoto;
+import spring.hrms.exception.UserNotFoundException;
 import spring.hrms.repository.AttendanceRepo;
 import spring.hrms.entity.employee.Attendance;
 import spring.hrms.mapper.AttendanceMapper;
@@ -39,7 +39,7 @@ public class AttendanceService {
 
 
     public List<AttendanceResponse> getAllAttendanceByEmployeeId(int employeeId) {
-        List<Attendance> attendances = personalRepo.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found")).getAttendances();
+        List<Attendance> attendances = personalRepo.findById(employeeId).orElseThrow(() -> new UserNotFoundException("Employee not found with id "+employeeId)).getAttendances();
         return mapper.toAttendanceResponse(attendances);
     }
 
@@ -55,7 +55,7 @@ public class AttendanceService {
 
     public List<AttendanceProjection> filter(String name, LocalDate minDate, LocalDate maxDate, LocalTime minTime, LocalTime maxTime, String status) {
         Specification<Attendance> specification = Specification.where(AttendanceSpecification.hasStatus(status)).and(AttendanceSpecification.hasDate(minDate, maxDate))
-                .and(AttendanceSpecification.hasTime(minTime, maxTime)).and(AttendanceSpecification.hasName(name));
+                .and(AttendanceSpecification.hasTime(minTime, maxTime)).and(AttendanceSpecification.hasFirstSecond(name));
 
 
         List<Attendance> all = repo.findAll(specification, Sort.by("date").descending());

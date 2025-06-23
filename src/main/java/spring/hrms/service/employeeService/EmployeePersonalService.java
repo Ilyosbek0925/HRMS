@@ -6,6 +6,7 @@ import spring.hrms.DTO.request.EmployeePersonalRequest;
 import spring.hrms.DTO.response.EmployeePersonalResponse;
 import spring.hrms.entity.EmployeeAllData;
 import spring.hrms.entity.employee.EmployeePersonal;
+import spring.hrms.exception.UserNotFoundException;
 import spring.hrms.mapper.EmployeePersonalMapper;
 import spring.hrms.repository.employeeRepo.EmployeePersonalRepo;
 import spring.hrms.temporaryStorage.TemporaryStorage;
@@ -26,9 +27,9 @@ public class EmployeePersonalService {
                 .employeePersonal(employeePersonal)
                 .build();
         temporaryStorage.add(build);
-        storageId++;
         EmployeePersonalResponse employeePersonalResponse = mapper.toEmployeePersonalResponse(employeePersonal);
         employeePersonalResponse.setStorageId(storageId);
+        storageId++;
         return employeePersonalResponse;
     }
 
@@ -57,7 +58,7 @@ public class EmployeePersonalService {
         repo.deleteById(employeeId);
 
         }else  {
-            throw new RuntimeException("employee not found");
+            throw new UserNotFoundException("employee not found with id " + employeeId);
         }
 
 

@@ -24,10 +24,12 @@ public class PayRollMapper {
         payRoll.setDeduction(deduction);
         }
         catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()+"\n\t\n\t");
         }
         payRoll.setStatus(payRollDto.getStatus());
-        payRoll.setEmployeePersonal(employeePersonalRepo.findById(payRollDto.getEmployeeId()).orElseThrow(()->new RuntimeException("Employee is not found")));
+        EmployeePersonal employee = employeePersonalRepo.findById(payRollDto.getEmployeeId()).orElseThrow(() -> new RuntimeException("Employee is not found"));
+        payRoll.setEmployeePersonal(employee);
+        payRoll.setEmployeeName(employee.getFirstName()+" "+employee.getLastName());
         return  payRoll;
     }
 
@@ -38,6 +40,7 @@ public class PayRollMapper {
                 .deduction(String.valueOf(payRoll.getDeduction()))
                 .employeeId(payRoll.getEmployeePersonal().getId())
                 .payRollId(payRoll.getId())
+                .employeeName(payRoll.getEmployeeName())
                 .build();
     }
 }

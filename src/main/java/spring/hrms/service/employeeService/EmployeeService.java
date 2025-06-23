@@ -9,6 +9,7 @@ import spring.hrms.DTO.projection.EmployeeProjection;
 import spring.hrms.entity.employee.EmployeePersonal;
 import spring.hrms.repository.employeeRepo.EmployeePersonalRepo;
 import spring.hrms.spesification.EmployeeSpecification;
+import spring.hrms.spesification.GenericSpesification;
 
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class EmployeeService {
     }
 
     public List<EmployeeProjection> filter(String name, String department, String designation, String type, String status) {
-        Specification<EmployeePersonal> specification = Specification.where(EmployeeSpecification.hasDepartment(department))
-                .and(EmployeeSpecification.hasDesignation(designation)).and(EmployeeSpecification.hasStatus(status)).and(EmployeeSpecification.hasType(type))
-                .and(EmployeeSpecification.hasName(name));
+        Specification<EmployeePersonal> specification = Specification.where(EmployeeSpecification.hasType(type))
+                .and(EmployeeSpecification.hasName(name)).and(GenericSpesification.hasDepartment(department))
+                .and(GenericSpesification.hasDesignation(designation)).and(GenericSpesification.hasStatus(status));
 
 return  repository.findAll(specification).stream().map(spe -> {
             EmployeeProjection projection = new EmployeeProjection();

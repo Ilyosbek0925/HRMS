@@ -12,9 +12,6 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttendanceProjection {
-//emp.id,pho.downloadUrl,emp.firstName,emp.lastName,
-// prof.designation,prof.employeeType,prof,att.breakTime,
-// att.checkOut,att.checkTime,att.date,att.status,att.workingHours
    private Integer attendanceId;
     private String downloadUrl;
     private String firstName;

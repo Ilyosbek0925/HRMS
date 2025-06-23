@@ -4,7 +4,6 @@ services:
   db:
     image: postgres:15
     container_name: hrms_postgres
-    restart: always
     environment:
       POSTGRES_DB: hrms
       POSTGRES_USER: batman
@@ -12,12 +11,11 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - hrms_postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
     container_name: hrms_app
-    restart: always
     depends_on:
       - db
     environment:
@@ -28,4 +26,5 @@ services:
       - "8080:8080"
 
 volumes:
-  postgres_data:
+  hrms_postgres_data:
+    external: true

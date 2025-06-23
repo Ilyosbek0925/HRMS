@@ -9,7 +9,7 @@ import spring.hrms.entity.status.PayRollStatus;
 @Setter
 @Builder
 public class PayRollDto {
-  private   Integer employeeId;
+    private Integer employeeId;
     private String ctc;
     private String salaryPerMonth;
     private String deduction;

@@ -9,14 +9,14 @@ import spring.hrms.entity.employee.EmployeePersonal;
 public class EmployeePersonalMapper {
 public EmployeePersonal toEmployeePersonal(EmployeePersonalRequest employeePersonalRequest) {
     EmployeePersonal employeePersonal = new EmployeePersonal();
-    employeePersonal.setAddress(employeePersonal.getAddress());
-    employeePersonal.setCity(employeePersonal.getCity());
-    employeePersonal.setEmail(employeePersonal.getEmail());
-    employeePersonal.setFirstName(employeePersonal.getFirstName());
-    employeePersonal.setLastName(employeePersonal.getLastName());
-    employeePersonal.setDateOfBirth(employeePersonal.getDateOfBirth());
-    employeePersonal.setGender(employeePersonal.getGender());
-    employeePersonal.setMobileNumber(employeePersonal.getMobileNumber());
+    employeePersonal.setAddress(employeePersonalRequest.getAddress());
+    employeePersonal.setCity(employeePersonalRequest.getCity());
+    employeePersonal.setEmail(employeePersonalRequest.getEmail());
+    employeePersonal.setFirstName(employeePersonalRequest.getFirstName());
+    employeePersonal.setLastName(employeePersonalRequest.getLastName());
+    employeePersonal.setDateOfBirth(employeePersonalRequest.getDateOfBirth());
+    employeePersonal.setGender(employeePersonalRequest.getGender());
+    employeePersonal.setMobileNumber(employeePersonalRequest.getMobileNumber());
     return employeePersonal;
 }
 public EmployeePersonalResponse toEmployeePersonalResponse(EmployeePersonal employeePersonal) {

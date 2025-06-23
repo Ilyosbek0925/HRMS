@@ -20,8 +20,6 @@ public class   EmployeeAccountAccessMapper {
         accountAccess.setGitHubId(accountAccessDTO.getGitHubId());
         accountAccess.setSkypeId(accountAccessDTO.getSkypeId());
         accountAccess.setSlackId(accountAccessDTO.getSlackId());
-        Optional<EmployeePersonal> byId = employeePersonalRepo.findById(accountAccess.getId());
-        accountAccess.setEmployeePersonal(byId.orElseThrow(() -> new RuntimeException("Employee personal not found")));
         return accountAccess;
     }
     public AccountAccessDTO toAccountAccessDTO(AccountAccess accountAccess) {

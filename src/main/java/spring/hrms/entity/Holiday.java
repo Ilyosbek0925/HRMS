@@ -12,4 +12,5 @@ import java.time.LocalDate;
 public class Holiday extends BaseEntity{
     private String holidayName;
     private LocalDate holidayDate;
+    private String dayOfWeek;
 }

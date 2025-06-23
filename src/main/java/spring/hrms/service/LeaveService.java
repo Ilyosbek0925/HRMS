@@ -31,7 +31,7 @@ public class LeaveService {
     }
 
     public EmployeeLeaveResponse update(int leaveId, EmployeeLeaveRequest employeeLeaveRequest) {
-        Integer employeeId = repository.findById(leaveId).orElseThrow(() -> new EntityNotFoundException("Leave not found")).getEmployeePersonal().getId();
+        Integer employeeId = repository.findById(leaveId).orElseThrow(() -> new EntityNotFoundException("Leave not found with id "+ leaveId)).getEmployeePersonal().getId();
         EmployeeLeave employeeLeave = mapper.toEmployeeLeave(employeeId, employeeLeaveRequest);
         employeeLeave.setId(leaveId);
         return mapper.toEmployeeLeaveResponse(repository.save(employeeLeave));
@@ -39,6 +39,6 @@ public class LeaveService {
     public void deleteLeave(int leaveId) {
       if(repository.existsById(leaveId)) {
           repository.deleteById(leaveId);
-      }else throw new EntityNotFoundException("Leave not found");
+      }else throw new EntityNotFoundException("Leave not found with id: " + leaveId);
     }
 }
