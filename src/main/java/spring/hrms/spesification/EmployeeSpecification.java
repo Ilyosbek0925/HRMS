@@ -29,34 +29,13 @@ public class EmployeeSpecification {
     }
 
 
-    public static Specification<EmployeePersonal> hasStatus(String status) {
-        if (status == null) {
-            return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
-        }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("status"), status + "%");
-    }
 
-
-    public static Specification<EmployeePersonal> hasDepartment(String department) {
-        if (department == null) {
-            return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
-        }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("employeeProfessional").get("department")), department.toLowerCase() + "%");
-    }
-
-
-    public static Specification<EmployeePersonal> hasDesignation(String designation) {
-        if (designation == null) {
-            return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
-        }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("employeeProfessional").get("designation")), designation.toLowerCase() + "%");
-    }
 
     public static Specification<EmployeePersonal> hasType(String type) {
         if (type == null) {
             return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
         }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("EmployeeProfessional").get("employeeType")), type.toLowerCase() + "%");
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("employeeProfessional").get("employeeType")), type.toLowerCase() + "%");
     }
 
 }

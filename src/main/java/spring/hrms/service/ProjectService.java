@@ -7,6 +7,7 @@ import spring.hrms.DTO.request.ProjectRequest;
 import spring.hrms.DTO.response.ProjectResponse;
 import spring.hrms.entity.Project;
 import spring.hrms.entity.employee.EmployeePersonal;
+import spring.hrms.exception.UserNotFoundException;
 import spring.hrms.mapper.ProjectMapper;
 import spring.hrms.repository.ProjectsRepository;
 import spring.hrms.repository.employeeRepo.EmployeePersonalRepo;
@@ -27,7 +28,7 @@ public class ProjectService {
     }
 
     public List<ProjectResponse> getAllProjects(int employeeId) {
-        EmployeePersonal employee = personalRepo.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+        EmployeePersonal employee = personalRepo.findById(employeeId).orElseThrow(() -> new UserNotFoundException("Employee not found with id "+ employeeId));
         return employee.getProjects().stream().map(mapper::toProjectResponse).collect(Collectors.toList());
     }
 
@@ -42,7 +43,7 @@ public class ProjectService {
     public void deleteProject(int projectId) {
         if (repository.existsById(projectId))
             repository.deleteById(projectId);
-        else throw new EntityNotFoundException("Project not found");
+        else throw new EntityNotFoundException("Project not found with id " + projectId);
     }
 
 

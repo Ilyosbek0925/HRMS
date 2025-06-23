@@ -14,6 +14,6 @@ public class DocumentResponse {
     private byte[] file;
     private String fileType;
     private String originalName;
-    private double size;
+    private Double size;
 
 }

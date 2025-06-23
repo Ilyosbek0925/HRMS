@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import spring.hrms.entity.BaseEntity;
+import spring.hrms.entity.status.CandidateStatus;
 
 import java.time.LocalDate;
 

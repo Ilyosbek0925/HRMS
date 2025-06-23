@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmployeePersonalResponse {
 private Integer storageId;
-private Integer employeeId;
     private String firstName;
     private String lastName;
     private String mobileNumber;

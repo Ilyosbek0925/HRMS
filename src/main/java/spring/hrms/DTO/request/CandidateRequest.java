@@ -1,7 +1,7 @@
 package spring.hrms.DTO.request;
 
 import lombok.Value;
-import spring.hrms.entity.employee.CandidateStatus;
+import spring.hrms.entity.status.CandidateStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;

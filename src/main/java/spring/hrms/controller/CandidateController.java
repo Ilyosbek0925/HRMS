@@ -12,6 +12,7 @@ import spring.hrms.entity.status.ResponseStatus;
 import spring.hrms.service.CandidateService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("candidate")
@@ -44,11 +45,11 @@ public class CandidateController {
     }
 
     @GetMapping("filter")
-    public ResponseEntity<CandidateResponse> filter(@RequestParam(required = false) String name,
-                                                    @RequestParam(required = false) String appliedFor,
-                                                    @RequestParam(required = false) String status){
-
-return null;
+    public ResponseEntity<List<CandidateResponse>> filter(@RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) String appliedFor,
+                                                          @RequestParam(required = false) String status) {
+        List<CandidateResponse> response = service.filter(name, appliedFor, status);
+        return ResponseEntity.ok(response);
 
 
     }

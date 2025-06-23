@@ -1,4 +1,4 @@
-package spring.hrms.service.employeeService.document;
+package spring.hrms.service.document;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class EmployeePhotoService {
         photo.setOriginalName(file.getOriginalFilename());
         photo.setServerName(response.getServerName());
         photo.setEmployeePersonal(employee);
-        photo.setDownloadUrl(domainName+"employee-photo/" + response.getServerName());
+        photo.setDownloadUrl(domainName+"/employee-photo/" + response.getServerName());
         photo.setSize(file.getSize());
         temporaryStorage.get(storageId).setPhoto(photo);
     }
@@ -53,7 +53,6 @@ public DocumentResponse updateEmployeePhoto(MultipartFile file, Integer employee
     DocumentResponse response = downloadUploadService.uploadFile(file);
     EmployeePhoto photo = getEmployeePhoto(file, response, employee);
     EmployeePhoto save = repository.save(photo);
-    System.out.println("filetype is "+save.getFileType()+"\n\n\n\n\n\n");
     return DocumentResponse.builder()
             .downloadUrl(save.getDownloadUrl())
             .size(save.getSize())

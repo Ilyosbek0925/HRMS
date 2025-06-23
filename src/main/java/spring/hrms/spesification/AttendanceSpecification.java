@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AttendanceSpecification {
-    public static Specification<Attendance> hasName(String name) {
+    public static Specification<Attendance> hasFirstSecond(String name) {
 
         if(name==null){
             return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
@@ -36,7 +36,7 @@ public class AttendanceSpecification {
         return (root, query, criteriaBuilder) -> {
 
             if (!status.isEmpty()) {
-                return criteriaBuilder.equal(root.get("status"), status);
+                return criteriaBuilder.equal(criteriaBuilder.lower(root.get("status")), status.toLowerCase()+"%");
             } else {
                 return criteriaBuilder.conjunction();
             }

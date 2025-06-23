@@ -3,10 +3,12 @@ package spring.hrms.controller.employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import spring.hrms.DTO.ApiResponseDto;
 import spring.hrms.DTO.request.EmployeePersonalRequest;
 import spring.hrms.DTO.response.EmployeePersonalResponse;
 import spring.hrms.entity.status.ResponseStatus;
+import spring.hrms.service.document.EmployeePhotoService;
 import spring.hrms.service.employeeService.EmployeePersonalService;
 import spring.hrms.temporaryStorage.TemporaryStorage;
 
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 @RequestMapping("employee-personal")
 public class EmployeePersonalController {
     private final EmployeePersonalService service;
+    private final EmployeePhotoService photoService;
 
     @PostMapping()
     public ResponseEntity<EmployeePersonalResponse> addEmployeePersonal(@RequestBody EmployeePersonalRequest employeePersonalRequest) {
@@ -24,6 +27,7 @@ public class EmployeePersonalController {
         return ResponseEntity.ok(employeePersonalResponse);
 
     }
+
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeePersonalResponse> getEmployeePersonal(@PathVariable Integer employeeId) {

@@ -10,18 +10,19 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.hrms.DTO.ApiResponseDto;
 import spring.hrms.DTO.response.DocumentResponse;
 import spring.hrms.entity.status.ResponseStatus;
-import spring.hrms.service.employeeService.document.EmployeePhotoService;
+import spring.hrms.service.document.EmployeePhotoService;
 
 import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("employee-photo")
+
 public class EmployeePhotoController {
     private final EmployeePhotoService service;
-    @PostMapping("/{employeeId}")
-    public ResponseEntity<ApiResponseDto> uploadRelivingLetter(@RequestParam MultipartFile file, @PathVariable Integer employeeId) {
-        service.uploadEmployeePhoto(file, employeeId);
+    @PostMapping("/{storageId}")
+    public ResponseEntity<ApiResponseDto> uploadRelivingLetter(@RequestParam MultipartFile file, @PathVariable Integer storageId) {
+        service.uploadEmployeePhoto(file, storageId);
         return ResponseEntity.ok(new ApiResponseDto(ResponseStatus.SUCCESS,"photo added successfully", LocalDateTime.now()));
     }
 

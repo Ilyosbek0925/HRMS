@@ -13,18 +13,16 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class EmployeeProfessionalMapper {
-private final EmployeePersonalRepo employeePersonalRepo;
     public EmployeeProfessional toEmployeeProfessional(EmployeeProfessionalRequest employeeProfessionalRequest) {
-            Optional<EmployeePersonal> byId = employeePersonalRepo.findById(employeeProfessionalRequest.getEmployeeId());
+
             EmployeeProfessional employeeProfessional = new EmployeeProfessional();
-        employeeProfessional.setEmployeePersonal(byId.orElseThrow(()->new RuntimeException("employee not found")));
-        employeeProfessional.setEmployeeType(employeeProfessional.getEmployeeType());
-        employeeProfessional.setLocation(employeeProfessional.getLocation());
-        employeeProfessional.setDepartment(employeeProfessional.getDepartment());
-        employeeProfessional.setDesignation(employeeProfessional.getDesignation());
-        employeeProfessional.setEmailAddress(employeeProfessional.getEmailAddress());
-        employeeProfessional.setUserName(employeeProfessional.getUserName());
-        employeeProfessional.setWorkingDays(employeeProfessional.getWorkingDays());
+        employeeProfessional.setEmployeeType(employeeProfessionalRequest.getEmployeeType());
+        employeeProfessional.setLocation(employeeProfessionalRequest.getLocation());
+        employeeProfessional.setDepartment(employeeProfessionalRequest.getDepartment());
+        employeeProfessional.setDesignation(employeeProfessionalRequest.getDesignation());
+        employeeProfessional.setEmailAddress(employeeProfessionalRequest.getEmailAddress());
+        employeeProfessional.setUserName(employeeProfessionalRequest.getUserName());
+        employeeProfessional.setWorkingDays(employeeProfessionalRequest.getWorkingDays());
         return employeeProfessional;
     }
 public EmployeeProfessionalResponse toEmployeeProfessionalResponse(EmployeeProfessional employeeProfessional,int storageId) {

@@ -1,4 +1,4 @@
-package spring.hrms.controller;
+package spring.hrms.controller.employee;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,7 @@ import spring.hrms.DTO.request.AttendanceRequest;
 import spring.hrms.DTO.request.AttendanceUpdateRequest;
 import spring.hrms.DTO.response.AttendanceResponse;
 import spring.hrms.entity.status.ResponseStatus;
-import spring.hrms.service.AttendanceService;
+import spring.hrms.service.employeeService.AttendanceService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

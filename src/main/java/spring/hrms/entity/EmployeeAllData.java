@@ -5,22 +5,18 @@ import lombok.Data;
 import spring.hrms.entity.employee.AccountAccess;
 import spring.hrms.entity.employee.EmployeePersonal;
 import spring.hrms.entity.employee.EmployeeProfessional;
-//import spring.hrms.entity.employee.archiveDocument.AppointmentLetter;
-//import spring.hrms.entity.employee.archiveDocument.ExperienceLetter;
-//import spring.hrms.entity.employee.archiveDocument.RelivingLetter;
-//import spring.hrms.entity.employee.archiveDocument.SalarySlip;
 import spring.hrms.entity.employee.document.*;
 
+import java.util.ArrayList;
 @Builder
 @Data
 public class EmployeeAllData {
     Integer storageId;
     EmployeePersonal employeePersonal;
     EmployeeProfessional employeeProfessional;
-//   AppointmentLetter appointmentLetter;
-//   ExperienceLetter experienceLetter;
-//   RelivingLetter relivingLetter;
-//   SalarySlip salarySlip;
-   EmployeePhoto photo;
+    EmployeePhoto photo;
     AccountAccess accountAccess;
+
+    @Builder.Default
+    ArrayList<Document> documents = new ArrayList<>();
 }

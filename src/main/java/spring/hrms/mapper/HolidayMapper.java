@@ -5,7 +5,7 @@ import spring.hrms.DTO.request.HolidayRequest;
 import spring.hrms.DTO.response.HolidayResponse;
 import spring.hrms.entity.Holiday;
 
-import java.util.ArrayList;
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Component
@@ -14,25 +14,22 @@ public class HolidayMapper {
         Holiday holiday = new Holiday();
         holiday.setHolidayDate(holidayRequest.getHolidayDate());
         holiday.setHolidayName(holidayRequest.getHolidayName());
+        holiday.setDayOfWeek(holidayRequest.getHolidayDate().getDayOfWeek().toString());
         return holiday;
     }
 
     public HolidayResponse toHolidayResponse(Holiday holiday) {
         return HolidayResponse.builder()
+                .holidayId(holiday.getId())
                 .holidayDate(holiday.getHolidayDate())
                 .holidayName(holiday.getHolidayName())
+                .holidayDayOfWeek(DayOfWeek.valueOf(holiday.getDayOfWeek()))
                 .build();
     }
 
-    public List<Holiday> toHolidays(List<HolidayRequest> holidayRequests) {
-        List<Holiday> holidays = new ArrayList<Holiday>();
-        List<Holiday> list = holidayRequests.stream().map(this::toHoliday).toList();
-        return list;
-    }
 
     public List<HolidayResponse> toHolidayResponses(List<Holiday> holidayResponses) {
-        List<HolidayResponse> list = holidayResponses.stream().map(this::toHolidayResponse).toList();
-        return list;
+        return holidayResponses.stream().map(this::toHolidayResponse).toList();
     }
 
 

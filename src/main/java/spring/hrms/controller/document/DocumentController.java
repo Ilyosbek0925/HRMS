@@ -1,13 +1,15 @@
 package spring.hrms.controller.document;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.hrms.DTO.ApiResponseDto;
 import spring.hrms.DTO.response.DocumentResponse;
 import spring.hrms.entity.status.ResponseStatus;
-import spring.hrms.service.employeeService.document.DocumentService;
+import spring.hrms.service.document.DocumentService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,16 +20,23 @@ import java.util.List;
 public class DocumentController {
     private final DocumentService service;
 
-    @GetMapping("/{employeeId}")
+    @GetMapping("by-employeeId/{employeeId}")
     public ResponseEntity<List<DocumentResponse>> getEmployeeDocument(@PathVariable int employeeId) {
         List<DocumentResponse> response = service.getDocuments(employeeId);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/{serverName}")
+    public ResponseEntity<byte[]> getRelivingLetter(@PathVariable String serverName) {
+        DocumentResponse response = service.downloadDocument(serverName);
+        return ResponseEntity.status(200)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getOriginalName() + "\"")
+                .contentType(MediaType.valueOf(response.getFileType()))
+                .body(response.getFile());
+    }
 
-
-    @PostMapping("{employeeId}")
-    public ResponseEntity<DocumentResponse> addDocument(@PathVariable int employeeId, @RequestParam MultipartFile file) {
-        DocumentResponse response = service.uploadFile(file, employeeId);
+    @PostMapping("{storageId}")
+    public ResponseEntity<DocumentResponse> addDocument(@PathVariable int storageId, @RequestParam MultipartFile file) {
+        DocumentResponse response = service.uploadFile(file, storageId);
         return ResponseEntity.ok(response);
     }
 

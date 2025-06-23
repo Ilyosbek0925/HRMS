@@ -5,10 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.hrms.DTO.request.HolidayRequest;
 import spring.hrms.DTO.response.HolidayResponse;
-import spring.hrms.entity.Holiday;
 import spring.hrms.service.HolidayService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -18,21 +16,33 @@ public class HolidayController {
     private final HolidayService holidayService;
 
 
-    @PostMapping("addHoliday")
-    public ResponseEntity<HolidayResponse> addHoliday(HolidayRequest holiday) {
+    @PostMapping
+    public ResponseEntity<HolidayResponse> addHoliday(@RequestBody HolidayRequest holiday) {
         HolidayResponse holidayResponse = holidayService.addHoliday(holiday);
         return ResponseEntity.status(201).body(holidayResponse);
     }
 
-    @GetMapping("getAllHolidays")
+    @GetMapping
     public ResponseEntity<List<HolidayResponse>> getAllHolidays() {
         List<HolidayResponse> allHoliday = holidayService.getAllHoliday();
         return ResponseEntity.status(200).body(allHoliday);
     }
 
-    @DeleteMapping("deleteByHolidayDate")
-    public ResponseEntity<HolidayResponse> deleteHolidayByDate(LocalDate holidayDate) {
-        holidayService.deleteHoliday(holidayDate);
+    @GetMapping("/filter")
+    public ResponseEntity<List<HolidayResponse>> filter(@RequestParam(required = false) String dayOfWeek,
+                                                        @RequestParam(required = false) String date,
+                                                        @RequestParam(required = false) String holidayName
+
+    ) {
+        List<HolidayResponse> allHoliday = holidayService.filter(date,dayOfWeek,holidayName);
+        return ResponseEntity.status(200).body(allHoliday);
+    }
+
+
+
+    @DeleteMapping("/{holidayId}")
+    public ResponseEntity<HolidayResponse> deleteHolidayByDate(@PathVariable Integer holidayId) {
+        holidayService.deleteHoliday(holidayId);
         return ResponseEntity.status(204).build();
     }
 
