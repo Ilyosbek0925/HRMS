@@ -13,6 +13,8 @@ import spring.hrms.entity.BaseEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Manager extends BaseEntity {
+
+
     String email;
     String name;
     String password;
