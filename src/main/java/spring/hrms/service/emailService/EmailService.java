@@ -3,23 +3,36 @@ package spring.hrms.service.emailService;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.SecureRandom;
 import java.util.Properties;
 
 public class EmailService {
     static Message message;
+    @Value("${spring.mail.host}")
+    private static String host;
+    @Value("${spring.mail.password}")
+    private static String password;
+    @Value("${spring.mail.username}")
+    private static String username;
+    @Value("${spring.mail.port}")
+    private static int port;
+    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+    private static boolean smtpStarttlsEnable;
+    @Value("${spring.mail.properties.mail.smtp.auth}")
+    private static boolean smtpAuth;
+    @Value("${spring.mail.properties.mail.smtp.starttls.required}")
+    private static boolean smtpStarttlsRequired;
+
 
     static {
 
-        System.out.println("keldiiiiiiiiii\n\n\n\n\n\n\n");
-        String password = "jfek mzzj ymvh wdzv";
-        String username = "xakimovilyosbobo@gmail.com";
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.ssl.enable", smtpStarttlsEnable);
+        properties.put("mail.smtp.auth" , smtpAuth);
         Session session = Session.getInstance(properties,
                 new Authenticator() {
                     @Override

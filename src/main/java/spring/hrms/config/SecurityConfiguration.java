@@ -31,7 +31,6 @@ public class SecurityConfiguration {
         return builder.build();
     }
 
-    // 2. SecurityFilterChain: JWT filterni qo‘shamiz
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         return http

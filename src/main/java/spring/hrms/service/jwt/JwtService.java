@@ -3,6 +3,7 @@ package spring.hrms.service.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,13 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+@Value("${jwt.access.expiry}")
+private String access_expiry;
 
-    private static final String SECRET = "TmV3U2VjcmV0S2V5Rm9ySldUU2lnbmluZ1B1cnBvc2VzMTIzNDU2Nzg=\r\n";
 
-    private String secretKey;
+    private final String secretKey;
 
-    public JwtService(){
+    public JwtService() {
         secretKey = generateSecretKey();
     }
 
@@ -47,7 +49,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*5))
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(access_expiry)))
                 .signWith(getKey(), SignatureAlgorithm.HS256).compact();
 
     }
@@ -58,7 +60,6 @@ public class JwtService {
     }
 
     public String extractUserName(String token) {
-        // extract the username from jwt token
         return extractClaim(token, Claims::getSubject);
     }
 

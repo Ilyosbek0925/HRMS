@@ -22,10 +22,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtService jwtService;
-@Autowired
-AuthService authService;
+    @Autowired
+    AuthService authService;
     @Autowired
     ApplicationContext context;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -39,10 +40,9 @@ AuthService authService;
             return;
         }
 
-        // JWT tekshiruv
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response); // yoki xatolik qaytarish
+            filterChain.doFilter(request, response);
             return;
         }
 
